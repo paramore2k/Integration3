@@ -1,0 +1,13 @@
+h1,h2,h3{
+    font-size: 32px;
+}
+/* Titre clignonant en CSS */
+#titreClignotant {
+    animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+
+}

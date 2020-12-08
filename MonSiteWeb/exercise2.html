@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Manipulation de vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>{{ message }}</p>
+    <h4 v-text="message"></h4>
+</div>
+
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+        message: "Salut"
+        },
+    });
+</script>
+</body>
+</html>
+
