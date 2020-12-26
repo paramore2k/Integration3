@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Manipulation de vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h3>{{ title }}</h3>
+    <!-- Méthode de l'enseignant, via un v-for en récupérant les données plus bas
+
+    Méthode plus rapide que la seconde étant donné que l'on parcours le tableau et que l'on a pas besoin d'écrire les valeurs à 2 endroits-->
+
+
+    <select v-model="selected">
+        <option disabled value="">Choisissez</option>
+        <option v-for="option in heros" :value="option">{{ option }}</option>
+    </select>
+    <br><br>
+    <span>Héro Sélectionné : {{ selected }}</span>
+
+    <br> <br>
+    
+    <!-- Seconde méthode -->
+
+    <select v-model="selectedHero">
+        <option disabled value="">Choisissez</option>
+        <option value="Black Panther">Black Panther</option>
+        <option value="Black Widow">Black Widow</option>
+        <option value="Captain America">Captain America</option>
+        <option value="Thor">THor</option>
+        <option value="Phoenix">Phoenix</option>
+    </select>
+    <br><br>
+    <span>Héro Sélectionné : {{ selectedHero }}</span>
+</div>
+
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            title: "Sélectionner un héro",
+            /* Si on mets null, aucun élément dans la case select box. Si on met un vide, l'élément choisissez apparaît */
+            selectedHero: '',
+            selected: '',
+            heros: [
+                "Phoenix",
+                "Wolverine",
+                "Black Widow",
+                "Thor",
+                "Captain America"
+            ],
+        },
+    });
+</script>
+</body>
+</html>

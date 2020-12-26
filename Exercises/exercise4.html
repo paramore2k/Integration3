@@ -3,21 +3,42 @@
 <head>
     <meta charset="utf-8" />
     <title>Manipulation de vue</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
+
 <div id="app">
-    <h4>{{message}} {{ firstname }} {{ lastname }}</h4>
+    <input type="checkbox" v-model="convertisseur">
+    <!-- Ici on affiche la variable d'action du computed -->
+     {{ getTemp }}
+
 </div>
 
 <script>
     let vm = new Vue({
         el: "#app",
         data: {
-            firstname: "David",
-            lastname: "Champagne",
-            message: "Bienvenue ! "
+            temperature : 20,
+            degre: "Farenheit",
+            convertisseur: false
         },
+        /* computed est utilisée pour combiner des données ensemble */
+        computed: {
+            getTemp() {
+                // Initiliaser la variable que nous retournerons pour connaître le calcul
+                let tempConvertie;
+                /* Si on clique sur le checkbox */
+                if (this.convertisseur){
+                    tempConvertie = this.temperature*1.8 + 32.0 + " " + this.degre;
+                }
+                /* Valeur par défaut sans cliquer sur le checkbox */
+                else {
+                    tempConvertie = this.temperature + "" + " Celcius";
+                }
+                return tempConvertie;
+            }
+        }
     });
 </script>
 </body>

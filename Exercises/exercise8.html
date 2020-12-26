@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Manipulation de vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+<table v-for="todos in todo">
+    <tr>
+        <th>Tâche</th>
+        <th>Statut</th>
+    </tr>
+    <tr>
+        <td>{{ todos.tache }}</td>
+        <td v-if="!todos.completed">Incomplet</td>
+        <td v-else>Complet</td>
+
+    </tr>
+</table>
+</div>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            todo: [
+                {
+                    id: 1,
+                    tache: "Laver les vitres",
+                    completed: false
+                },
+                {
+                    id: 2,
+                    tache: "Nettoyer le plancher",
+                    completed: false
+                },
+                {
+                    id: 3,
+                    tache: "Installer les cadres",
+                    completed: false
+                }
+
+            ]
+        },
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Manipulation de vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h3>{{ titre }}</h3>
+    <input-text></input-text>
+
+</div>
+
+<script>
+    /* Section pour le input permettant d'entrée du texte */
+    Vue.component("input-text", {
+     data: function () {
+         return {message: ''};
+     },
+        /* Section permettant de faire afficher le texte entrée ci-haut */
+    template: `<div>
+    <input v-model="message" placeholder="Entrez du texte ici">
+    <p>Le texte entrée est: {{ message }}</p>
+    </div>`,
+    });
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            titre: "Mon composant de changement de texte",
+        },
+    });
+</script>
+</body>
+</html>

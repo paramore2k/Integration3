@@ -6,18 +6,22 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
-<div id="app">
-    <h4>{{message}} {{ firstname }} {{ lastname }}</h4>
-</div>
+<!-- Retourne l'année en cours selon la méthode getYear-->
+<div id="app"><h4>{{ getYear }}</h4></div>
 
 <script>
     let vm = new Vue({
         el: "#app",
         data: {
-            firstname: "David",
-            lastname: "Champagne",
-            message: "Bienvenue ! "
+            d: new Date(),
         },
+        /* computed est utilisée pour combiner des données ensemble */
+        computed: {
+            getYear() {
+                return this.d.getFullYear();
+
+            }
+        }
     });
 </script>
 </body>
