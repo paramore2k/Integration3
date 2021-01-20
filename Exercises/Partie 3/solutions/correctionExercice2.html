@@ -6,42 +6,22 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
-    <div id="app">
-      <h1>{{ title }}</h1>
-      <div>
-        <select v-model="selectedHeroByVModel">
-          <option v-for="option in heroes" :value="option">{{option}}</option>
-        </select>
-        <span>Get value by v-model: {{ selectedHeroByVModel }}</span>
-      </div>
-      <br />
-      <div>
-        <select v-on:change="onChange">
-          <option v-for="option in heroes" :value="option">{{option}}</option>
-        </select>
-        <span>Get value by v-on: {{ selectedHeroByVOn }}</span>
-      </div>
+    <div id="monapp">
+      <label for="chp">Saisissez un nouveau titre :</label
+      ><input id="chp" v-model="valeurchamp" />
+      <titre v-bind:valeur="valeurchamp"></titre>
     </div>
+
     <script>
-      let vm = new Vue({
-        el: "#app",
+      let maVueModele = new Vue({
+        el: "#monapp",
         data: {
-          title: "My heroes",
-          heroes: [
-            "Phoenix",
-            "Wolverine",
-            "Black Widow",
-            "Thor",
-            "Daredevil",
-            "Deadpool",
-            "Spiderman",
-          ],
-          selectedHeroByVModel: null,
-          selectedHeroByVOn: null,
+          valeurchamp: "Grand titre",
         },
-        methods: {
-          onChange: function (event) {
-            this.selectedHeroByVOn = event.target.value;
+        components: {
+          titre: {
+            props: ["valeur"],
+            template: "<h1>{{valeur}}</h1>",
           },
         },
       });

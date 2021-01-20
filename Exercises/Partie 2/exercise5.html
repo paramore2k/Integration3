@@ -3,20 +3,93 @@
 <head>
     <meta charset="utf-8" />
     <title>Manipulation de vue</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 </head>
 <body>
-<div id="app">
-    <h4>{{message}} {{ firstname }} {{ lastname }}</h4>
+<div id="app" class="m-3">
+    <h5>{{ titre }}</h5>
+    <users>
+    </users>
 </div>
 
 <script>
+    /* Détails des utilisateurs */
+    Vue.component("users", {
+        data: function () {
+            return {
+                users: [
+                    {
+                        prenom: 'David',
+                        nom: 'Champagne',
+                    },
+                    {
+                        prenom: 'Noémie',
+                        nom: 'Champagne'
+                    },
+                ],
+            }
+        },
+        template: `
+          <div>
+          <ul>
+            <li v-for="user in users">
+              {{ user.prenom }} {{ user.nom }}
+              <userDetails></userDetails>
+            </li>
+          </ul>
+          </div>`,
+    });
+/* Composant détails des utilisateurs  */
+    Vue.component("userDetails", {
+        data: function () {
+            return {
+                        telephone: '450-405-1212',
+                        email: 'david@david.com',
+            }
+        },
+        template: `
+          <div>
+          <ul><li>
+            Téléphone: {{ telephone }}
+          </li>
+          <li>
+            E-mail: {{ email }}
+          </li></ul>
+
+          <user-adress/>
+          </div>`,
+    });
+
+    /* Composant des adresses des utilisateurs  */
+    Vue.component("userAdress", {
+        data: function () {
+            return {
+                        no_civique: '5',
+                        rue: 'ste-pie',
+                        code_postal:'J0E 2L0'
+            }
+        },
+        template: `
+          <div>
+          Adresse:
+          <ul>
+            <li>
+              {{ no_civique }} {{ rue }}
+              {{ code_postal }}
+            </li>
+          </ul>
+          </div>`,
+    });
+
     let vm = new Vue({
         el: "#app",
         data: {
-            firstname: "David",
-            lastname: "Champagne",
-            message: "Bienvenue ! "
+            titre: "Liste des usagers et de leurs détails",
         },
     });
 </script>

@@ -57,12 +57,14 @@
         Affichez les horaires
       </button>
       <transition name="fade" appear>
+
         <div
           class="modal-overlay"
           v-if="showModal"
           @click="showModal = false"
         ></div>
       </transition>
+
       <transition name="slide" appear>
         <div class="modal" v-if="showModal">
           <h1>Horaire de la station</h1>
@@ -76,6 +78,7 @@
           </button>
         </div>
       </transition>
+
     </div>
     <script>
       new Vue({

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Manipulation de vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+
+    <!-- On passe la valeur du props en l'instanciant. -->
+    <label for="champTexte">Écrire une nouvelle valeur: </label>
+    <input id="champTexte" v-model="texteInput">
+    <titre v-bind:valeur="texteInput"></titre>
+
+
+</div>
+
+<script>
+
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            Error: "Erreur",
+            title: "Exercise no 2: Props avec la valeur de l'input texte",
+            texteInput: "Test"
+        },
+        components: {
+            titre: {
+                props: {
+                    valeur: {
+                        type: String,
+                        validator: function (inputValue) {
+                            return /^[a-zA-Z]+$/.exec(inputValue);
+                        },
+                    },
+                },
+                template: "<h1>{{ valeur }}</h1>"
+            },
+        },
+    });
+</script>
+</body>
+</html>

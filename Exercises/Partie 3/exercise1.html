@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Manipulation de vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h4>{{ title }}</h4>
+    <!-- On passe la valeur du props en l'instanciant. -->
+    <mon-props nom="Le Props David"></mon-props>
+</div>
+
+<script>
+    Vue.component("mon-props", {
+        props: ["nom"],
+        template: "<p>Ceci est un props instancié du nom de:  {{ nom }}</p>"
+    })
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            title: "Mon premier props",
+        },
+
+    });
+</script>
+</body>
+</html>

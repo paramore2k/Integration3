@@ -12,40 +12,40 @@
 </head>
 <body>
 <div id="app" class="m-3">
-    <p>
-        Boutons pour thumbs up et thumbs down
-    </p>
-    <p>
-        <button type="button" class="mr-2" v-on:click="thumbsUp('Le bouton thumbs up a été cliquer' )"><i class="fas fa-thumbs-up"></i></button>
-        <button type="button" v-on:click="thumbsDown('Le bouton thumbs up a été cliquer' )"><i class="fas fa-thumbs-down"></i></button>
-    </p>
-
-    <h5>{{ message + '' + count}} fois</h5>
-    <h5>{{ message2 + '' + count2}} fois</h5>
-
-
+    <h5>{{ titre }}</h5>
+    <votes></votes>
 </div>
 
 <script>
+    Vue.component("votes", {
+        data: function () {
+            return {
+                countThumbsUp: 0,
+                countThumbsDown: 0,
+            }
+        },
+
+        template: `
+          <div>
+            <p>
+              Boutons pour thumbs up et thumbs down
+            </p>
+            <p>
+              <button type="button" class="mr-2" v-on:click="countThumbsUp++"><i
+                  class="fas fa-thumbs-up"></i></button>
+              <button type="button" v-on:click="countThumbsDown++"><i
+                  class="fas fa-thumbs-down"></i></button>
+            </p>
+
+            <h5>Le bouton thumbsUp a été cliquer {{ countThumbsUp }} fois</h5>
+            <h5>Le bouton thumbsDown a été cliquer {{ countThumbsDown }} fois</h5>
+          </div>`,
+    });
     let vm = new Vue({
         el: "#app",
         data: {
-            message: 'Le bouton thumbs up a été cliquer ',
-            message2: 'Le bouton thumbs down a été cliquer ',
-            count: 0,
-            count2: 0,
-            titre: "Mon composant de changement de texte",
+            titre: "Mon compteur de pouces",
         },
-        methods: {
-            thumbsUp: function (message) {
-                this.count++;
-                this.msg = message;
-            },
-            thumbsDown: function (message2) {
-                this.count2++;
-                this.msg = message2;
-            }
-        }
     });
 </script>
 </body>

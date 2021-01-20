@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Manipulation de vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h4>{{ title }}</h4>
+
+    <label>Km2: <input type="text" v-model="km2"></label><br/>
+    <label>CM: <input type="text" v-model="cm"></label><br/>
+    <label>MM: <input type="text" v-model="mm"></label>
+</div>
+
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            km2: 0,
+            cm: 0,
+            mm: 0,
+            title: "Conversion d'unité en v-model",
+        },
+        watch: {
+            km2: function (val) {
+                this.km2 = val;
+                this.cm = val * 100000;
+                this.mm = val * 1000000;
+                console.log(this.km2);
+            },
+            cm: function (val) {
+                this.km2 = val / 100000;
+                this.cm = val;
+                this.mm = val * 10;
+            },
+            mm: function (val) {
+                this.km2 = val / 1000000;
+                this.cm = val / 10;
+                this.mm = val;
+            },
+        },
+    });
+</script>
+</body>
+</html>

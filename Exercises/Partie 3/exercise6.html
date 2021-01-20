@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Manipulation de vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h3>{{ title }}</h3>
+    <span id="chargement">Chargement en cours...</span>
+    <asynchrone id="chargement"></asynchrone>
+</div>
+
+<script>
+    Vue.component("asynchrone", function (resolve, reject) {
+        setTimeout(function () {
+            resolve({
+                template: `<div>Je suis une page asynchrone !</div>`,
+                methods: {
+                    chargement: function () {
+                        document.getElementById("chargement").style.visibility = "hidden";
+                    },
+                },
+                created: function () {
+                    this.chargement();
+                },
+            });
+        }, 1000)
+
+    });
+
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            title: "Page asynchrone",
+        },
+    });
+</script>
+</body>
+</html>

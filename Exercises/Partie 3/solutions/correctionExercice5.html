@@ -1,30 +1,42 @@
 <!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>Manipulation de vue</title>
+    <meta charset="UTF-8" />
+    <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <link rel="stylesheet" href="fontawesome-free-5.15.1-web/css/all.css" />
   </head>
   <body>
     <div id="app">
-      <h1>{{ title }}</h1>
-      <input-text></input-text>
+      <label>km: <input type="text" v-model="km2" /></label><br />
+      <label>cm: <input type="text" v-model="cm" /></label><br />
+      <label>mm: <input type="text" v-model="mm" /></label><br />
     </div>
+
     <script>
-      Vue.component("input-text", {
-        data: function () {
-          return { message: "" };
-        },
-        template: `<div>
-                    <input v-model="message" placeholder="modifiez-moi">
-                    <p>Le message est : {{ message }}</p>
-                  </div>`,
-      });
-      let vm = new Vue({
+      let maVueModele = new Vue({
         el: "#app",
         data: {
-          title: "my component event",
+          km2: 0,
+          cm: 0,
+          mm: 0,
+        },
+        watch: {
+          km2: function (val) {
+            this.km2 = val;
+            this.cm = val * 100000;
+            this.mm = val * 1000000;
+          },
+          cm: function (val) {
+            this.km2 = val / 100000;
+            this.cm = val;
+            this.mm = val * 10;
+          },
+          mm: function (val) {
+            this.km2 = val / 1000000;
+            this.cm = val / 10;
+            this.mm = val;
+          },
         },
       });
     </script>

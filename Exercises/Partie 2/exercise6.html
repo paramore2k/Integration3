@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Manipulation de vue</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+<div id="app" class="m-3">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h5>{{ titre }}</h5>
+                <form class="form border border-black m-0">
+                    <label for="transport">Vélo</label>
+                    <input type="radio"
+                           id="transport"
+                           name="transport"
+                           value="velo"
+                           v-on:click="changeForm('velo')"
+                           checked
+                    />
+
+                    <label for="voiture" class="ml-4">Voiture</label>
+                    <input type="radio"
+                           id="voiture"
+                           name="transport"
+                           value="voiture"
+                           v-on:click="changeForm('voiture')"
+                    />
+
+
+                    <component v-bind:is="currentForm"></component>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    /* Section vélo  */
+    Vue.component("velo", {
+        data: function () {
+            return {
+                message: "choisie"
+            };
+        },
+        template: `
+          <div>
+          <label for="type_velo">Type de velo :</label>
+          <input type="text" id="type_velo" name="type_velo" />
+          <div>
+            <label for="frein">Type de frein :</label>
+            <input type="text" id="frein" name="frein" />
+          </div>
+          <div>
+            <label for="pneu">Epaisseur des pneus en pouce :</label>
+            <input type="text" id="pneu" name="pneu" />
+          </div>
+          </div>`,
+    });
+
+    Vue.component("voiture", {
+        data: function () {
+            return {
+                message: "choisie"
+            };
+        },
+        template: `
+          <div>
+              <div>
+                  <label for="type_autobus">Type de voiture :</label>
+                  <input type="text" id="type_autobus" name="type_autobus"/>
+              </div>
+
+              <div>
+                  <label for="chevaux">Nombre de chevaux :</label>
+                  <input type="text" id="chevaux" name="chevaux">
+               </div>
+
+              <div>
+                <input type="radio" id="manuel" name="transmission" value="manuel" checked />
+                <label for="manuel">Manuel</label>
+
+                <input type="radio" id="automatique" name="transmission" value="automatique" />
+                <label for="automatique">Automatique</label>
+              </div>
+
+              <div>
+                  <label for="consomation">Consomation d'essence (l/100km) :</label>
+                  <input type="text" id="consomation" name="consomation">
+              </div>
+
+          </div>`,
+    });
+
+
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            currentForm: "velo",
+            titre: "Type de transport",
+        },
+        methods: {
+            changeForm: function (form) {
+                this.currentForm = form;
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

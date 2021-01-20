@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Manipulation de vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h4>{{ title }}</h4>
+    <!-- On passe la valeur du props en l'instanciant. -->
+    <sous-contenue>
+        <template v-slot:first>
+        <p>Première Slot</p>
+        </template>
+        <template v-slot:second>
+        <p>Seconde Slot</p></template>
+        <template v-slot:third>
+        <p>Troisième Slot</p></template>
+        <template v-slot:fourth>
+            <p>Quatrième slot</p>
+        </template>
+    </sous-contenue>
+
+
+</div>
+
+<script>
+Vue.component("sous-contenue", {
+    template: `<div>
+<slot name="first"></slot>
+<slot name="second"></slot>
+<slot name="third"></slot>
+<slot name="fourth"></slot>
+</div>`,
+});
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            title: "Exercise no 4: Les slots",
+        }
+    });
+</script>
+</body>
+</html>
