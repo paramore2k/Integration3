@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Examen 1 - exercice 5</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style type="text/css">
+    /* Pour le modal */
+
+    .modal-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 98;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 99;
+
+        width: 100%;
+        max-width: 400px;
+        background-color: #fff;
+        border-radius: 16px;
+
+        padding: 25px;
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s;
+    }
+
+    .fade-enter,
+    .fade-leave-to {
+        opacity: 0;
+    }
+
+    .slide-enter-active,
+    .slide-leave-active {
+        transition: transform 0.5s;
+    }
+
+    .slide-enter,
+    .slide-leave-to {
+        transform: translateY(-50%) translateX(100vw);
+    }
+
+    /* Pour la case à cocher du h1 */
+    .surligner{
+
+        text-decoration: line-through;
+    }
+    .changementCouleur {
+        background-color: red;
+    }
+</style>
+
+<body>
+<div id="app">
+   <formulaire></formulaire>
+</div>
+
+<script>
+    Vue.component("formulaire", {
+
+        data: function () {
+            return {
+                showModal: false,
+                nom: '',
+                msg: "Mettre le trait",
+                prenom: '',
+                mode: "",
+                selected: "",
+                genre: ["mr", "ms"],
+                title: "Examen - Exercise 5",
+                checked: false
+            };
+        },
+        components: {
+            nomprenom: {
+                props: ["valeur"],
+                template: `<h1>{{ valeur }}</h1>`,
+            }
+        },
+        computed: {
+            cls() {
+                let maClasse = "";
+                if (this.checked) {
+                    maClasse = "surligner";
+                }
+                return maClasse;
+            },
+        },
+        template: `<div>
+        <div class="">
+        <h5 class="text-center mb-3">{{ title }}</h5>
+
+    <p>Sélectionner votre genre</p>
+          <p>
+    <input type="radio"
+           name="genre"
+           value="Mr"
+           class="mr-1"
+           v-model="selected"
+    >Homme
+    <br/>
+    <input type="radio"
+           name="genre"
+           value="Ms"
+           class="mr-1"
+           v-model="selected"
+    >Femme
+          </p>
+
+          <div class="form-group">
+            <label for="prenom" class="form-label">Écrire votre prénom: </label>
+            <input id="prenom" v-model="prenom" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="nom" class="form-label">Écrire votre nom: </label>
+            <input id="nom" v-model="nom" class="form-control">
+          </div>
+
+
+        <nomprenom v-if="prenom && nom" v-bind:valeur="'Bonjour' + ' ' + selected + ' ' + prenom + ' ' + nom" v-bind:class="cls">
+        </nomprenom>
+
+        <p>
+          <input type="checkbox"
+                 v-model="checked" v-bind:class="cls2">Mettre / Enlever le trait
+        </p>
+
+        <modal v-bind:prenom="prenom" v-bind:nom="nom" v-bind:selected="selected" v-bind:class="cls">
+        </modal>
+
+        </div>
+        </div>`,
+    });
+
+    Vue.component("modal", {
+        props: ["selected", "nom", "prenom"],
+        data: function () {
+            return {
+                msg: "Mettre le trait",
+                showModal: false,
+                mode: "",
+                genre: ["mr", "ms"],
+                title: "Examen - Exercise 5",
+                checked: false
+            };
+        },
+        methods:{
+            showThisModal() {
+                showModal = false;
+                this.$emit("update-show-modal", showModal);
+            },
+            update(showModal) {
+                this.showModal = showModal;
+            },
+        },
+        computed: {
+            cls() {
+                let msg = "Un test";
+                let maClasse = "";
+                if (this.checked) {
+                    maClasse = "changementCouleur";
+                    msg = "Plus un test";
+                }
+                return maClasse;
+            },
+        },
+        template: `<div>
+
+        <button class="btn btn-success" id="show-modal"
+                v-on:click="showModal = true">Soumission
+        </button>
+
+        <transition name="fade" appear>
+
+          <div class="modal-overlay"
+               v-if="showModal"
+               v-on:update-show-modal="update"
+               @click="showThisModal"
+          >
+          </div>
+
+        </transition>
+
+        <transition name="slide" appear>
+          <div class="modal" v-if="showModal" v-bind:class="cls">
+
+              <h1>{{ selected + " " + nom + " " + prenom + " "}}</h1>
+            <p>
+              <input type="checkbox"
+                     v-model="checked">Changement de couleur
+            </p>
+            <button class="button" v-on:click="showModal = false">
+              Fermer le modal
+            </button>
+          </div>
+        </transition>
+                  </div>`,
+    });
+
+    let vm = new Vue({
+        el: "#app",
+        data: {
+
+        },
+    });
+</script>
+</body>
+</html>

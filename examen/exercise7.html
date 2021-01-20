@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Examen: Exercise no 6</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<style type="text/css">
+    .tab-button {
+        padding: 6px 10px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        background: #f0f0f0;
+        margin-bottom: -1px;
+        margin-right: -1px;
+    }
+    .tab-button:hover {
+        background: #e0e0e0;
+    }
+    .tab-button.active {
+        background: #e0e0e0;
+    }
+    .tab {
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+    form {
+        background-color: whitesmoke;
+    }
+    .icon-bar, footer {
+        width: 100%; /* Full-width */
+        background-color: #555; /* Dark-grey background */
+        overflow: auto; /* Overflow due to float */
+    }
+    footer p{
+        text-align: center;
+        color: white;
+        margin: 1em;
+    }
+
+    .icon-bar a {
+        float: left; /* Float links side by side */
+        text-align: center; /* Center-align text */
+        width: 20%; /* Equal width (5 icons with 20% width each = 100%) */
+        padding: 12px 0; /* Some top and bottom padding */
+        transition: all 0.3s ease; /* Add transition for hover effects */
+        color: white; /* White text color */
+        font-size: 36px; /* Increased font size */
+    }
+
+    .icon-bar a:hover {
+        background-color: #000; /* Add a hover color */
+    }
+
+    .active {
+        background-color: #4CAF50; /* Add an active/current color */
+    }
+
+
+    .surligner{
+        text-decoration: line-through;
+    }
+</style>
+<body>
+<div id="app">
+    <!-- Endroit de la slot pour le header -->
+    <slots-exercise6>
+        <template v-slot:header>
+            <div class="icon-bar">
+                <a href="#" @click="currentTab = 'home'"><i class="fa fa-home"></i></a>
+                <a href="#" @click="currentTab = 'home'"><i class="fa fa-user"></i></a>
+                <a href="#" @click="currentTab = 'calc'"><i class="fa fa-calculator"></i></a>
+                <a href="#" @click="currentTab = 'contact'"><i class="fa fa-envelope-o"></i></a>
+                <a href="#" @click="currentTab = 'about'"><i class="fa fa-info-circle"></i></a>
+            </div>
+            <component v-bind:is="currentTabComponent"></component>
+        </template>
+    </slots-exercise6>
+
+
+    <!-- Endroit pour la slot no 2 du second composant-->
+    <slots-exercise6-b>
+        <template v-slot:footer>
+            <footer>
+                <p>Copyright David Champagne 2020</p>
+            </footer>
+        </template>
+    </slots-exercise6-b>
+    </div>
+
+<script>
+    /* Composant slot 1 - header  */
+    Vue.component("slots-exercise6", {
+        template: `<div>
+<slot name="header"></slot>
+</div>`,
+    });
+    /* Composant slot 2 - footer */
+    Vue.component("slots-exercise6-b", {
+        template: `<div>
+<slot name="footer"></slot>
+</div>`,
+    });
+/* Composant dynamique pour les boutons */
+    Vue.component("slots-home", {
+            template: `<div>
+<h4 class="text-center mt-3">Accueil</h4>
+
+    <div class="container">
+        <div class="col-6 m-auto">
+            <form class="p-3 m-2">
+                <div class="form-group">
+                    <label for="prenom">Écrire votre prénom: </label>
+                    <input id="prenom"
+                    value="David">
+                </div>
+
+                <div class="form-group">
+                    <label for="nom">Écrire votre nom: </label>
+                    <input id="nom"
+                    value="Champagne">
+                </div>
+
+                <div class="form-check p-0">
+                    <input type="radio"
+                           name="genre"
+                           value="mr"
+                           checked="checked"
+                    >Homme
+                </div>
+
+                <div class="form-check p-0">
+                    <input type="radio"
+                           name="genre"
+                           value="ms"
+                    >Femme
+                </div>
+                <br/>
+                <br/>
+            <button id="show-modal" class="btn btn-success"
+            v-on:click="showModal = true">Soumission
+            </button>
+
+            </form>
+            </div>
+            </div>
+</div>`});
+
+    Vue.component("slots-contact", {
+        template: `<div>
+<h4 class="text-center mt-3">Contact</h4>
+</div>`});
+
+    Vue.component("slots-calc", {
+        template: `<div>
+            <div class="text-center m-3">
+                <label><input type="text" v-model="cm"></label><><label><input type="text" v-model="pouces"></label>   <br/>
+            </div>
+<slot name="calc"></slot>
+
+</div>`,
+        data: function() {
+            return {
+                cm: 0,
+                pouces: 0,
+            }
+
+        },
+        watch: {
+            cm: function (val){
+                this.cm = val;
+                this.pouces = val/2.54;
+            },
+            pouces: function (val) {
+                this.pouces = val;
+                this.cm = 2.54*val;
+            }
+
+        },});
+
+    Vue.component("slots-about", {
+        template: `<div>
+<h4>À propos</h4>
+</div>`});
+
+
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            nom: '',
+            cm: 0,
+            pouces: 0,
+            prenom: '',
+            mode: "",
+            currentTab: "Home",
+            selected: "",
+            genre: ["mr", "ms"],
+            title: "Examen - Exercise 7",
+            checked: false
+        },
+        components: {
+            nomprenom: {
+                props: ["valeur"],
+                template: `<h1>{{ valeur }}</h1>`
+            },
+        },
+        computed: {
+            currentTabComponent: function () {
+                return "slots-" + this.currentTab.toLowerCase();
+            }
+        }
+    });
+</script>
+</body>
+</html>

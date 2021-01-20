@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Examen: Exercise no 2</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style type="text/css">
+    .surligner{
+        text-decoration: line-through;
+    }
+</style>
+<body>
+<div id="app">
+    <h2>{{ title }}</h2>
+
+    <label for="prenom">Écrire votre prénom: </label>
+    <input id="prenom" v-model="prenom">
+<br/>
+    <label for="nom">Écrire votre nom: </label>
+    <input id="nom" v-model="nom">
+
+
+    <nomprenom v-bind:valeur="prenom + ' ' + nom" v-bind:class="cls">
+    </nomprenom>
+    <input type="checkbox" v-model="checked">Mettre un trait / Enlever le trait</input>
+
+</div>
+
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            nom: '',
+            prenom: '',
+            mode: "",
+            title: "Examen - Exercise 2",
+            firstname: "David",
+            lastname: "Champagne",
+            checked: false
+        },
+        components: {
+            nomprenom: {
+                props: ["valeur"],
+                template: `<h1>{{ valeur }}</h1>`
+            },
+        },
+        computed: {
+
+            cls(){
+                let maClasse = "";
+                if(this.checked){
+                    maClasse = "surligner";
+                }
+                return maClasse;
+
+            }
+        }
+    });
+</script>
+</body>
+</html>

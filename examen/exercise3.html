@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Examen: Exercise no 3</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style type="text/css">
+    .surligner{
+        text-decoration: line-through;
+    }
+</style>
+<body>
+<div id="app">
+    <h2>{{ title }}</h2>
+
+    <p>Sélectionner votre genre</p>
+
+    <input type="radio"
+           name="genre"
+           value="mr"
+           v-model="selected"
+    >Homme
+    <br/>
+    <input type="radio"
+           name="genre"
+           value="ms"
+           v-model="selected"
+    >Femme
+    <br/>
+    <br/>
+    <p>
+    <label for="prenom">Écrire votre prénom: </label>
+    <input id="prenom" v-model="prenom">
+    <br/>
+    <label for="nom">Écrire votre nom: </label>
+    <input id="nom" v-model="nom">
+    </p>
+
+    <nomprenom v-if="prenom && nom" v-bind:valeur="'Bonjour' + ' ' + selected + ' ' + prenom + ' ' + nom" v-bind:class="cls">
+
+    </nomprenom><br/>
+
+    <input type="checkbox"
+           v-model="checked">Mettre le trait / Enlever le trait
+    </input>
+
+</div>
+
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            nom: '',
+            prenom: '',
+            mode: "",
+            selected: "",
+            genre: ["mr", "ms"],
+            title: "Examen - Exercise 3",
+            checked: false,
+        },
+        components: {
+            nomprenom: {
+                props: ["valeur"],
+                template: `<h1>{{ valeur }}</h1>`
+            },
+        },
+        computed: {
+
+            cls(){
+                let maClasse = "";
+                if (this.checked) {
+                    maClasse = "surligner";
+                }
+                return maClasse;
+            }
+        }
+    });
+</script>
+</body>
+</html>

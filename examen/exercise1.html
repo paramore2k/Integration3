@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Examen: Exercise no 1</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h2>{{ title }}</h2>
+    <!-- Première méthode pour afficher le contenue du data dans le html -->
+    <h1>{{ firstname }} {{ lastname }}</h1>
+
+    <!-- Seconde méthode, via v-text -->
+    <h1 v-text="firstname + ' '  + lastname"></h1>
+
+</div>
+
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            title: "Examen - Exercise 1",
+            firstname: "David",
+            lastname: "Champagne",
+        }
+    });
+</script>
+</body>
+</html>
